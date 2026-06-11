@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Night at Hogwarts ✨ — A Romantic Puzzle Adventure</title>
+  <meta name="description" content="A magical romantic puzzle adventure at Hogwarts. Solve enchanted puzzles and discover a love story written in the stars." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Background layers -->
+  <canvas id="starsCanvas"></canvas>
+  <div class="candlelight-vignette" aria-hidden="true"></div>
+  <div class="castle-silhouette"    aria-hidden="true"></div>
+  <div class="castle-windows"       aria-hidden="true"></div>
+  <div class="fog-layer"            aria-hidden="true"></div>
+  <div id="fireflies-container"     aria-hidden="true"></div>
+  <div id="hearts-container"        aria-hidden="true"></div>
+  <div id="petals-container"        aria-hidden="true"></div>
+
+  <div id="game" role="main">
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 1 · The Enchanted Letter         -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-1" class="screen active" aria-labelledby="s1title">
+      <div class="scene-overlay letter-overlay"></div>
+      <div class="screen-content">
+
+        <div id="envelope-wrapper" class="envelope-wrapper" aria-live="polite">
+          <p id="s1title" class="magic-title" style="margin-bottom:0.5rem">A Night at Hogwarts ✨</p>
+          <p class="magic-subtitle" style="margin-bottom:1.5rem">A romantic puzzle adventure</p>
+          <div class="envelope" id="envelope" role="img" aria-label="An enchanted Hogwarts letter sealed with a rose wax seal">
+            <div class="envelope-seal" id="envelope-seal">
+              <div class="seal-wax"><span class="seal-h">🌹</span></div>
+            </div>
+            <div class="envelope-flap" id="envelope-flap"></div>
+            <div class="envelope-body"></div>
+          </div>
+          <p style="font-family:'Dancing Script',cursive;color:rgba(255,173,197,0.75);font-size:0.9rem;margin-top:0.5rem;animation:subtitlePulse 3s ease-in-out infinite">
+            An owl left this for you at midnight…
+          </p>
+          <button class="open-envelope-btn glow-btn" id="open-envelope-btn" aria-label="Break the seal and open the letter">
+            Break the Seal 🕯️
+          </button>
+        </div>
+
+        <div class="letter-content hidden" id="letter-content" aria-live="polite">
+          <div class="parchment-letter">
+            <div class="hogwarts-crest" aria-hidden="true">✦ &nbsp; HOGWARTS &nbsp; ✦</div>
+            <div class="letter-text">
+              <p class="letter-greeting">My dearest <span id="letter-name-display">stranger</span>,</p>
+              <p>The stars have been whispering your name.</p>
+              <p>Tonight, I have prepared a series of enchanted puzzles — each one a clue, a memory, a piece of something I've been meaning to tell you for a very long time.</p>
+              <span class="letter-note">Solve them. And you'll understand everything. 🌙</span>
+              <p style="margin-top:1rem">Don't keep the magic waiting. 🕯️</p>
+              <p class="letter-signature">— Your Secret Admirer 🦉</p>
+            </div>
+          </div>
+          <div class="name-input-section">
+            <label for="player-name" class="quill-label">✦ Write your name, dear one… ✦</label>
+            <div class="quill-input-wrapper">
+              <span class="quill-icon" aria-hidden="true">🪶</span>
+              <input type="text" id="player-name" class="quill-input"
+                placeholder="Your name here…" maxlength="28"
+                autocomplete="off" aria-required="true" />
+            </div>
+            <button id="accept-btn" class="scroll-btn glow-btn">Begin the Puzzles ✨</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 2 · Choose Your House            -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-2" class="screen" aria-labelledby="s2title" hidden>
+      <div class="scene-overlay house-overlay"></div>
+      <div class="screen-content">
+        <div class="scene-header">
+          <h1 id="s2title" class="magic-title">Which House Holds Your Heart?</h1>
+          <p class="magic-subtitle">Your house reveals the magic within you…</p>
+        </div>
+        <div class="house-grid" id="house-grid" role="radiogroup" aria-label="Choose your Hogwarts house">
+          <button class="house-card" id="house-gryffindor" data-house="gryffindor"
+            data-color2="#D4AF37" data-gift="🌹"
+            data-message="A brave heart loves the deepest of all. Your courage is your greatest magic. 🦁💛"
+            aria-label="Gryffindor" role="radio" aria-checked="false">
+            <div class="house-crest gryffindor-crest"><div class="crest-inner"><span class="house-animal">🦁</span></div></div>
+            <span class="house-name">Gryffindor</span>
+            <span class="house-trait">Courage &amp; Warmth</span>
+          </button>
+          <button class="house-card" id="house-slytherin" data-house="slytherin"
+            data-color2="#aaaaaa" data-gift="⚗️"
+            data-message="Mysterious and magnetic — your secret admirer has been enchanted by you far longer than you know. 🐍"
+            aria-label="Slytherin" role="radio" aria-checked="false">
+            <div class="house-crest slytherin-crest"><div class="crest-inner"><span class="house-animal">🐍</span></div></div>
+            <span class="house-name">Slytherin</span>
+            <span class="house-trait">Mystery &amp; Allure</span>
+          </button>
+          <button class="house-card" id="house-ravenclaw" data-house="ravenclaw"
+            data-color2="#946B2D" data-gift="📚"
+            data-message="A wise soul — you know that love is the most ancient and powerful magic of all. 🦅✨"
+            aria-label="Ravenclaw" role="radio" aria-checked="false">
+            <div class="house-crest ravenclaw-crest"><div class="crest-inner"><span class="house-animal">🦅</span></div></div>
+            <span class="house-name">Ravenclaw</span>
+            <span class="house-trait">Wisdom &amp; Wonder</span>
+          </button>
+          <button class="house-card" id="house-hufflepuff" data-house="hufflepuff"
+            data-color2="#ecb939" data-gift="🌼"
+            data-message="The kindest hearts are always the most loved. Someone has fallen for your warmth completely. 🦡"
+            aria-label="Hufflepuff" role="radio" aria-checked="false">
+            <div class="house-crest hufflepuff-crest"><div class="crest-inner"><span class="house-animal">🦡</span></div></div>
+            <span class="house-name">Hufflepuff</span>
+            <span class="house-trait">Kindness &amp; Loyalty</span>
+          </button>
+        </div>
+        <div class="house-message hidden" id="house-message" role="status" aria-live="polite">
+          <p id="house-message-text"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 3 · Enchanted Memory             -->
+    <!-- PUZZLE 1: Card flip memory match        -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-3" class="screen" aria-labelledby="s3title" hidden>
+      <div class="scene-overlay gift-overlay"></div>
+      <div class="screen-content">
+        <div class="scene-header">
+          <h1 id="s3title" class="magic-title">Enchanted Memory 🃏</h1>
+          <p class="magic-subtitle">Eight magical symbols are hidden. Find each one's twin…</p>
+        </div>
+
+        <div class="puzzle-bar">
+          <span class="puzzle-label">Puzzle 1 of 3</span>
+          <span class="puzzle-pairs" id="memory-pairs" aria-live="polite" aria-atomic="true">0 / 8 pairs found</span>
+        </div>
+
+        <div class="memory-grid" id="memory-grid" role="grid" aria-label="4 by 4 memory card grid"></div>
+
+        <div class="memory-complete hidden" id="memory-complete" role="status" aria-live="polite">
+          <p class="complete-msg">"Your memory is as magical as your heart —<br/>every match, a little more of the story unfolds. 🌟"</p>
+          <button class="scroll-btn glow-btn" id="memory-next-btn">Puzzle 2 — The Love Letter 💌</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 4 · The Love Letter              -->
+    <!-- PUZZLE 2: Word order sentence builder   -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-4" class="screen" aria-labelledby="s4title" hidden>
+      <div class="scene-overlay ballroom-overlay"></div>
+      <div class="screen-content">
+        <div class="scene-header">
+          <h1 id="s4title" class="magic-title">The Love Letter 💌</h1>
+          <p class="magic-subtitle">Tap the words in the right order to reveal a secret message…</p>
+        </div>
+
+        <div class="puzzle-bar">
+          <span class="puzzle-label">Puzzle 2 of 3</span>
+          <span class="puzzle-pairs" id="word-progress" aria-live="polite" aria-atomic="true">Sentence 1 of 3</span>
+        </div>
+
+        <div class="word-puzzle-container" id="word-puzzle-container">
+          <div class="word-display-area" role="status" aria-live="polite" aria-label="Words placed so far">
+            <div class="word-display" id="word-display"></div>
+          </div>
+          <div class="word-grid" id="word-grid" role="group" aria-label="Jumbled word tiles — tap in correct order"></div>
+          <p class="word-hint" id="word-hint">✨ Tap words in the correct order</p>
+        </div>
+
+        <div class="word-complete hidden" id="word-complete" role="status" aria-live="polite">
+          <div class="revealed-letter" id="revealed-letter" aria-label="The completed love letter">
+            <div class="hogwarts-crest" aria-hidden="true" style="color:#7a5010;font-size:0.7rem;letter-spacing:0.4em;margin-bottom:1rem">✦ &nbsp; YOUR LOVE LETTER &nbsp; ✦</div>
+            <div id="letter-lines"></div>
+          </div>
+          <button class="scroll-btn glow-btn" id="word-next-btn">Puzzle 3 — The Maze 🌹</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 5 · The Rose Garden Maze         -->
+    <!-- PUZZLE 3: Canvas maze navigation        -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-5" class="screen" aria-labelledby="s5title" hidden>
+      <div class="scene-overlay tower-overlay"></div>
+      <div class="screen-content">
+        <div class="scene-header">
+          <h1 id="s5title" class="magic-title">The Rose Garden Maze 🌹</h1>
+          <p class="magic-subtitle">Find your way through the enchanted garden to reach the rose…</p>
+        </div>
+
+        <div class="puzzle-bar">
+          <span class="puzzle-label">Puzzle 3 of 3</span>
+          <span class="puzzle-pairs" id="maze-steps" aria-live="polite" aria-atomic="true">0 steps</span>
+        </div>
+
+        <canvas id="maze-canvas" role="application"
+          aria-label="Rose garden maze — use arrow keys, WASD, or the buttons below to navigate"></canvas>
+
+        <div class="maze-controls" id="maze-controls" aria-label="Maze direction controls">
+          <div class="maze-btn-row">
+            <button class="maze-btn" id="maze-up"   aria-label="Move up">↑</button>
+          </div>
+          <div class="maze-btn-row">
+            <button class="maze-btn" id="maze-left"  aria-label="Move left">←</button>
+            <button class="maze-btn" id="maze-down"  aria-label="Move down">↓</button>
+            <button class="maze-btn" id="maze-right" aria-label="Move right">→</button>
+          </div>
+        </div>
+
+        <div class="maze-complete hidden" id="maze-complete" role="status" aria-live="polite">
+          <p class="complete-msg">"Through every twist and turn, you found the way —<br/>just like you always find your way to what truly matters. 🌹"</p>
+          <button class="scroll-btn glow-btn" id="maze-next-btn">Cast the Final Spell 🪄</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 6 · The Final Spell             -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-6" class="screen" aria-labelledby="s6title" hidden>
+      <div class="scene-overlay spell-overlay"></div>
+      <div class="screen-content spell-screen">
+        <div class="scene-header">
+          <h1 id="s6title" class="magic-title">The Love Spell 🪄</h1>
+          <p class="magic-subtitle">Type the ancient spell to seal your magic forever…</p>
+        </div>
+        <div class="wand-container" id="wand-container" aria-hidden="true">
+          <div class="wand" id="wand"><div class="wand-tip" id="wand-tip"></div></div>
+          <canvas id="spell-canvas" aria-hidden="true"></canvas>
+        </div>
+        <div class="spell-input-section">
+          <div class="spell-target" aria-hidden="true">
+            <span class="spell-chars" id="spell-chars"></span>
+          </div>
+          <label for="spell-input" class="spell-label">Whisper the spell: <em style="color:#f0c75e">Amoravi</em></label>
+          <input type="text" id="spell-input" class="spell-input"
+            placeholder="Amoravi…" maxlength="7"
+            autocomplete="off" aria-describedby="spell-hint" />
+          <p id="spell-hint" class="spell-hint">
+            <em>Amoravi</em> — "I have loved." Each letter is a heartbeat. ✨
+          </p>
+        </div>
+        <div class="spell-complete hidden" id="spell-complete" role="status" aria-live="polite">
+          <div class="golden-bloom" id="golden-bloom" aria-hidden="true"></div>
+          <div class="spell-characters" aria-hidden="true">
+            <span>🧙‍♂️</span>
+            <span class="golden-sky">💛</span>
+            <span>🧙‍♀️</span>
+          </div>
+          <p class="complete-msg" style="font-size:1.3rem">
+            "The spell is cast. The magic is real.<br/>
+            And somewhere across the stars,<br/>
+            they felt it too." 💫
+          </p>
+          <button class="scroll-btn glow-btn" id="spell-next-btn">See Your Ending 💛</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SCREEN 7 · The Ending                  -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="screen-7" class="screen" aria-labelledby="s7title" hidden>
+      <div class="scene-overlay ending-overlay"></div>
+      <div class="screen-content ending-screen">
+        <div class="ending-card" id="ending-card">
+          <div class="ending-stars-decor" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          <div class="ending-crest" aria-hidden="true">🏰</div>
+          <h1 id="s7title" class="ending-name">—</h1>
+          <p class="ending-tagline">Puzzle Master &amp; True Hogwarts Romantic.</p>
+          <p class="ending-subtitle">You solved every enchantment. 💛</p>
+          <div style="display:flex;gap:1rem;justify-content:center;margin:0.5rem 0">
+            <div class="ending-house-badge" id="ending-house-badge" aria-hidden="true">🏰</div>
+            <div class="ending-gift-badge"  id="ending-gift-badge"  aria-hidden="true">✨</div>
+          </div>
+          <div class="ending-divider" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          <p class="ending-footer">A Night at Hogwarts ✨ &nbsp;·&nbsp; A Romantic Puzzle Adventure</p>
+        </div>
+
+        <!-- I love you typewriter reveal -->
+        <div class="ily-reveal hidden" id="ily-reveal" role="status" aria-live="polite">
+          <div class="ily-hearts" id="ily-hearts" aria-hidden="true">💕</div>
+          <p class="ily-main" id="ily-main"></p>
+          <p class="ily-ps"   id="ily-ps"></p>
+        </div>
+
+        <div class="ending-actions">
+          <button class="scroll-btn glow-btn share-btn" id="share-btn" aria-label="Share your magic">
+            Share Your Magic 🪄
+          </button>
+          <button class="scroll-btn glow-btn play-again-btn" id="play-again-btn" aria-label="Play again">
+            Once More ✨
+          </button>
+        </div>
+        <div class="share-toast hidden" id="share-toast" role="status" aria-live="polite">
+          Copied to clipboard — share the magic! 💛
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#game -->
+  <script src="game.js"></script>
+</body>
+</html>
